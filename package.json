@@ -2,6 +2,10 @@
   "name": "find_relatives_server",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "dev":"nodemon server.js",
+    "start": "node server.js"
+  },
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
