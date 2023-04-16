@@ -7,8 +7,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({ Report, People,Post,LostSituation }) {
       // define association here
+      this.belongsTo(Report, { foreignKey: "report_id" });
+      this.belongsTo(People, { foreignKey: "people_id" });
+      this.belongsTo(LostSituation, { foreignKey: "lostSituation_id" });
+      this.hasOne(Post, { foreignKey: "searchRegistrations_id" });
     }
   }
   SearchRegistrations.init(
@@ -32,12 +36,13 @@ module.exports = (sequelize, DataTypes) => {
 
       report_address: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           checkLen(value) {
             if (value.length >= 5 && value.length <= 20) {
               return true;
             } else {
-              throw new Error("độ dài phải từ 5 đến 20");
+              throw new Error("length must be from 5 to 20");
             }
           },
         },
@@ -54,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
             if (value.length === 10) {
               return true;
             } else {
-              throw new Error("sdt phải có 10 số");
+              throw new Error("must be 10 numbers");
             }
           },
         },
@@ -67,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
             if (value.length === 12) {
               return true;
             } else {
-              throw new Error("CCCD phải có 12 số");
+              throw new Error("CCCD must be 12 numbers");
             }
           },
         },
@@ -100,7 +105,7 @@ module.exports = (sequelize, DataTypes) => {
             if (value.length >= 5 && value.length <= 20) {
               return true;
             } else {
-              throw new Error("độ dài phải từ 5 đến 20");
+              throw new Error("length must be from 5 to 20");
             }
           },
         },
@@ -157,6 +162,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      
     },
     {
       sequelize,

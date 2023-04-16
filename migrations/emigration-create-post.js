@@ -3,19 +3,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("AdminAccounts", {
+    await queryInterface.createTable("posts", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      email: {
-        type: Sequelize.STRING,
+      approved_date: Sequelize.DATE,
+      searchRegistrations_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "search_registrations",
+          key: "id",
+        },
       },
-      password: {
-        type: Sequelize.STRING,
-      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -27,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("AdminAccounts");
+    await queryInterface.dropTable("posts");
   },
 };

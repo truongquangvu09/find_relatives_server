@@ -1,27 +1,28 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class AdminAccount extends Model {
+  class Post extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({SearchRegistrations}) {
       // define association here
+      this.belongsTo(SearchRegistrations, {foreignKey:'searchRegistrations_id'})
     }
   }
-  AdminAccount.init(
+  Post.init(
     {
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
+      approved_date: DataTypes.DATE
+      
     },
 
     {
       sequelize,
-      modelName: "AdminAccount",
+      modelName: "Post",
       timestamps: true,
     }
   );
-  return AdminAccount;
+  return Post;
 };

@@ -7,7 +7,7 @@ const { authenticate } = require("../middlewares/auth/authenticate");
 
 const adminAccountRouter = express.Router();
 
-adminAccountRouter.post("/createAccount",authenticate, createAccount);
+adminAccountRouter.post("/createAccount", authenticate,createAccount);
 adminAccountRouter.post("/login", login);
 
 module.exports = {

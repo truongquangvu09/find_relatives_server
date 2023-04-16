@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SearchRegistrations', {
+    await queryInterface.createTable("search_registrations", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       report_name: {
         type: Sequelize.STRING,
@@ -100,20 +100,41 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      report_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model:"reports",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      people_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model:"peoples",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      lostSituation_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "lost_situations",
+          key: "id",
+        },
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
-      
-    
-    
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SearchRegistrations');
-  }
+    await queryInterface.dropTable("search_registrations");
+  },
 };

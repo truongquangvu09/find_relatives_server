@@ -33,7 +33,7 @@ const login = async (req, res) => {
     });
     const isAuth = bcrypt.compareSync(password, admin.password);
     if (isAuth) {
-      res.status(200).send({ message: "Logged in successfully" });
+      res.status(200).send({ message: "Logged in successfully", token });
     } else {
       res.status(403).send({ message: "Authentication failed" });
     }
