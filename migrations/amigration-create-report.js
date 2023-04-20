@@ -12,17 +12,19 @@ module.exports = {
       },
       report_name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       password: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       type: {
         type: Sequelize.STRING,
       },
-
 
       createdAt: {
         allowNull: false,

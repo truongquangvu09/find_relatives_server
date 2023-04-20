@@ -12,12 +12,16 @@ module.exports = {
       },
       date_missing: {
         type: Sequelize.DATE,
+        allowNull: false,
       },
       last_seen: {
         type: Sequelize.DATE,
+        allowNull: false,
       },
-      lost_reason:{
+
+      lost_reason: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

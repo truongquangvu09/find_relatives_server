@@ -1,17 +1,16 @@
-const { SearchRegistrations } = require("../../models/searchRegistration");
 const checkExist = (Model) => {
   return async (req, res, next) => {
     // kiem tra xem SearchsearchRegistrations co ton tai hay k ?
     const { id } = req.params;
-    const searchRegistrations = await Model.findOne({
+    const check = await Model.findOne({
       where: {
         id,
       },
     });
-    if (searchRegistrations) {
+    if (check) {
       next();
     } else {
-      res.status(404).send(`khong tim thay SearchsearchRegistrations co id la ${id}`);
+      res.status(404).send(`khong tim thay ${Model.name} co id la ${id}`);
     }
   };
 };

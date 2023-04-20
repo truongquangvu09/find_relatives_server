@@ -12,12 +12,11 @@ module.exports = {
       },
       content_text: {
         type: Sequelize.DATE,
+        allowNull: false,
       },
-      boadcast_date: {
-        type: Sequelize.DATE,
-      },
-      file:{
+      file: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

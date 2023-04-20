@@ -15,14 +15,22 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(People, {
         foreignKey: "lostSituation_id",
       });
-
     }
   }
   LostSituation.init(
     {
-      date_missing: DataTypes.DATE,
-      last_seen: DataTypes.DATE,
-      lost_reason: DataTypes.STRING,
+      date_missing: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      last_seen: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      lost_reason: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
 
     {

@@ -9,14 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Comment }) {
       // define association here
-      this.hasMany(Comment,{foreignKey:'tvShow_id'})
+      this.hasMany(Comment, { foreignKey: "tvShow_id" });
     }
   }
   TvShow.init(
     {
-      content_text: DataTypes.STRING,
-      boadcast_date: DataTypes.DATE,
-      file:DataTypes.STRING,
+      content_text: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      file: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
 
     {

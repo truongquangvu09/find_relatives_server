@@ -5,7 +5,7 @@ const authenticate = (req, res, next) => {
   try {
     const decode = jwt.verify(token, "tokenadmin");
     if (decode) {
-      req.admin = decode;
+      req.report = decode;
       return next();
     } else {
       res.status(401).send({ message: "You are not logged in" });
@@ -15,6 +15,6 @@ const authenticate = (req, res, next) => {
   }
 };
 
-module.exports={
-    authenticate
-}
+module.exports = {
+  authenticate,
+};

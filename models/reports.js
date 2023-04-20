@@ -16,8 +16,17 @@ module.exports = (sequelize, DataTypes) => {
   Report.init(
     {
       report_name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true,
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       type: {
         type: DataTypes.STRING,
         defaultValue: "user",

@@ -7,15 +7,19 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({SearchRegistrations}) {
+    static associate({ SearchRegistrations }) {
       // define association here
-      this.belongsTo(SearchRegistrations, {foreignKey:'searchRegistrations_id'})
+      this.belongsTo(SearchRegistrations, {
+        foreignKey: "searchRegistrations_id",
+      });
     }
   }
   Post.init(
     {
-      approved_date: DataTypes.DATE
-      
+      approved_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     },
 
     {

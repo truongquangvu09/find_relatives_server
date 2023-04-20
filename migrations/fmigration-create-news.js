@@ -11,12 +11,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       content_text: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
       },
-      boadcast_date: {
-        type: Sequelize.DATE,
-      },
-      image:{
+      image: {
         type: Sequelize.STRING,
       },
       createdAt: {

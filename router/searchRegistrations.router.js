@@ -9,15 +9,24 @@ const {
 const { SearchRegistrations } = require("../models/index");
 const { checkExist } = require("../middlewares/validations/checkExist");
 const { authenticate } = require("../middlewares/auth/authenticate");
-const {uploadImage}= require("../middlewares/upload/upload-image")
+const { uploadImages } = require("../middlewares/upload/upload-image");
 const SearchRegistrationsRouter = express.Router();
 
-SearchRegistrationsRouter.post("/",uploadImage("peoples"), createSearchRegistrations);
-SearchRegistrationsRouter.get("/",authenticate, getAllSearchRegistrations);
-SearchRegistrationsRouter.get("/:id",authenticate, getDetailSearchRegistrations);
+SearchRegistrationsRouter.post(
+  "/",
+  uploadImages("peoples"),
+  createSearchRegistrations
+);
+SearchRegistrationsRouter.get("/", authenticate, getAllSearchRegistrations);
+SearchRegistrationsRouter.get(
+  "/:id",
+  authenticate,
+  getDetailSearchRegistrations
+);
 SearchRegistrationsRouter.delete(
   "/:id",
-  checkExist(SearchRegistrations),authenticate,
+  checkExist(SearchRegistrations),
+  authenticate,
   deleteSearchRegistrations
 );
 

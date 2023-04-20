@@ -12,6 +12,7 @@ module.exports = {
       },
       comment_text: {
         type: Sequelize.DATE,
+        allowNull: false,
       },
       report_id: {
         type: Sequelize.INTEGER,
