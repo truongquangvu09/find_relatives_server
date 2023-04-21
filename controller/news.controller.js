@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { News } = require("../models/index");
 
 const createNews = async (req, res) => {
@@ -14,9 +15,21 @@ const createNews = async (req, res) => {
 };
 
 const getNewsList = async (req, res) => {
+  const { content_text } = req.query;
   try {
-    newsList = await News.findAll();
-    res.status(200).send(newsList);
+    if (content_text) {
+      newsList = await News.findAll({
+        where: {
+          content_text: {
+            [Op.like]: `%${content_text}%`,
+          },
+        },
+      });
+      res.status(200).send(newsList);
+    } else {
+      const newsLists = await News.findAll();
+      res.status(200).send(newsLists);
+    }
   } catch (error) {
     res.status(500).send(error.message);
   }

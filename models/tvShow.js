@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class TvShow extends Model {
+  class Tv_show extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,23 +12,21 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Comment, { foreignKey: "tvShow_id" });
     }
   }
-  TvShow.init(
+  Tv_show.init(
     {
       content_text: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
-      file: {
+      media: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
     },
 
     {
       sequelize,
-      modelName: "TvShow",
+      modelName: "Tv_show",
       timestamps: true,
     }
   );
-  return TvShow;
+  return Tv_show;
 };

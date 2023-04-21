@@ -1,15 +1,15 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class LostSituation extends Model {
+  class Lost_situation extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ SearchRegistrations, People }) {
+    static associate({ Search_registrations, People }) {
       // define association here
-      this.hasMany(SearchRegistrations, {
+      this.hasMany(Search_registrations, {
         foreignKey: "lostSituation_id",
       });
       this.hasMany(People, {
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  LostSituation.init(
+  Lost_situation.init(
     {
       date_missing: {
         type: DataTypes.DATE,
@@ -35,9 +35,9 @@ module.exports = (sequelize, DataTypes) => {
 
     {
       sequelize,
-      modelName: "LostSituation",
+      modelName: "Lost_situation",
       timestamps: true,
     }
   );
-  return LostSituation;
+  return Lost_situation;
 };

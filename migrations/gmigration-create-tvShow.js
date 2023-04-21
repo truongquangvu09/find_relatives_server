@@ -11,12 +11,10 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       content_text: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      file: {
         type: Sequelize.STRING,
-        allowNull: false,
+      },
+      media: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
