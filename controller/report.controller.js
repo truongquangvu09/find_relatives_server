@@ -82,12 +82,13 @@ const reportDetails = async (req, res) => {
 
 const updateReport = async (req, res) => {
   const { id } = req.params;
-  const { report_name, email, password, type } = req.body;
+  const { report_name, email, password } = req.body;
+  console.log("email: " + email);
   try {
     const ReportUpdated = await Report.update(
-      { report_name, email, password, type },
+      { report_name, email, password },
       {
-        where: { id: id },
+        where: { id },
       }
     );
     res.status(200).send("updated report: ");

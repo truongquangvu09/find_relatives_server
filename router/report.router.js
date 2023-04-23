@@ -18,7 +18,7 @@ reportRouter.post("/login", login);
 
 reportRouter.get("/report-list", reportList);
 reportRouter.get("/report-detail/:id", checkExist(Report), reportDetails);
-reportRouter.put("/report-update/:id", updateReport);
+reportRouter.put("/report-update/:id", checkExist(Report), updateReport);
 reportRouter.delete("/report-delete/:id", checkExist(Report), deleteReport);
 module.exports = {
   reportRouter,

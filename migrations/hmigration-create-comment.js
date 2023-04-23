@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       comment_text: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       report_id: {

@@ -3,11 +3,13 @@ const { SearchRegistrationsRouter } = require("./searchRegistrations.router");
 const { reportRouter } = require("./report.router");
 const { newsRouter } = require("./news.router");
 const { tvShowRouter } = require("./tvShow.router");
+const { commentRouter } = require("./comment.router");
 const rootRouter = express.Router();
 rootRouter.use("/searchRegistrations", SearchRegistrationsRouter);
 rootRouter.use("/report", reportRouter);
 rootRouter.use("/news", newsRouter);
 rootRouter.use("/tvShow", tvShowRouter);
+rootRouter.use("/comment", commentRouter);
 
 module.exports = {
   rootRouter,

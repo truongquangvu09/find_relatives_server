@@ -40,7 +40,7 @@ module.exports = {
         allowNull: false,
       },
       brief_biography: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       picture: {
@@ -54,7 +54,7 @@ module.exports = {
       lostSituation_id: {
         type: Sequelize.INTEGER,
         references: {
-          model:"lost_situations",
+          model: "lost_situations",
           key: "id",
         },
         allowNull: false,
