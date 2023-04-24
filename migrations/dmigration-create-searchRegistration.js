@@ -39,10 +39,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      date_report: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
       people_name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -55,8 +51,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-
-      peolpe_address: {
+      people_address: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -98,12 +93,11 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       report_id: {
         type: Sequelize.INTEGER,
         references: {
-          model:"reports",
+          model: "reports",
           key: "id",
         },
         allowNull: false,
@@ -111,7 +105,7 @@ module.exports = {
       people_id: {
         type: Sequelize.INTEGER,
         references: {
-          model:"peoples",
+          model: "peoples",
           key: "id",
         },
         allowNull: false,

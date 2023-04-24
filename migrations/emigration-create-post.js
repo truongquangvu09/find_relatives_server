@@ -10,10 +10,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      approved_date: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
       searchRegistrations_id: {
         type: Sequelize.INTEGER,
         references: {

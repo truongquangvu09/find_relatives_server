@@ -74,7 +74,9 @@ const deleteNews = async (req, res) => {
       },
     });
     res.status(200).send("deleted News");
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 module.exports = {

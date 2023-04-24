@@ -80,10 +80,6 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      date_report: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
       people_name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -101,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
 
-      peolpe_address: {
+      people_address: {
         type: DataTypes.STRING,
         validate: {
           checkLen(value) {
@@ -163,7 +159,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "Chưa xác nhận",
       },
     },
     {

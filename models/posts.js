@@ -15,12 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init(
-    {
-      approved_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-    },
+    {},
 
     {
       sequelize,
