@@ -1,4 +1,4 @@
-const { People } = require("../models/index");
+const { Peoples } = require("../models/index");
 
 const createpeople = async (req, res) => {
   const {
@@ -16,7 +16,7 @@ const createpeople = async (req, res) => {
   const { file } = req;
   const urlImage = `http://localhost:3000/${file.path}`;
   try {
-    const newPeople = People.create({
+    const newPeople = await Peoples.create({
       people_name,
       birthday,
       gender,
@@ -25,7 +25,7 @@ const createpeople = async (req, res) => {
       mom_name,
       coalpeople_name,
       brief_biography,
-      picture: urlImage,
+      people_image: urlImage,
       searching_process,
       lostSituation_id,
     });
