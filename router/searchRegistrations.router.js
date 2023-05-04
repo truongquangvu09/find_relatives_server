@@ -15,7 +15,7 @@ const SearchRegistrationsRouter = express.Router();
 
 SearchRegistrationsRouter.post(
   "/searchRegistrations-create",
-  uploadImages("peoples"),
+  uploadImages("people_image"),
   createSearchRegistrations
 );
 SearchRegistrationsRouter.get(

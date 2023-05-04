@@ -71,7 +71,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      picture: {
+      people_image: {
         type: Sequelize.STRING,
         allowNull: false,
       },

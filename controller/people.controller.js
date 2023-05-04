@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const { Peoples } = require("../models/index");
+const { Lost_situation } = require("../models/index");
 
 const createpeople = async (req, res) => {
   const {
@@ -46,10 +47,13 @@ const PeopleList = async (req, res) => {
             [Op.like]: `%${people_name}%`,
           },
         },
+        include: [{ model: Lost_situation }],
       });
       res.status(200).send(list);
     } else {
-      const lists = await Peoples.findAll();
+      const lists = await Peoples.findAll({
+        include: [{ model: Lost_situation }],
+      });
       res.status(200).send(lists);
     }
   } catch (error) {
@@ -64,6 +68,7 @@ const detailPeople = async (req, res) => {
       where: {
         id,
       },
+      include: [{ model: Lost_situation }],
     });
     res.status(200).send(detail);
   } catch (error) {

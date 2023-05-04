@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const { Search_registrations } = require("../models/index");
+const { Report, Peoples, Lost_situation } = require("../models/index");
 
 const createSearchRegistrations = async (req, res) => {
   const {
@@ -23,6 +24,9 @@ const createSearchRegistrations = async (req, res) => {
     last_seen,
     lost_reason,
     status,
+    report_id,
+    people_id,
+    lostSituation_id,
   } = req.body;
   const { file } = req;
   const urlImage = `http://localhost:3000/${file.path}`;
@@ -43,12 +47,15 @@ const createSearchRegistrations = async (req, res) => {
       mom_name,
       coal_people_name,
       brief_biography,
-      picture: urlImage,
+      people_image: urlImage,
       searching_process,
       date_missing,
       last_seen,
       lost_reason,
       status,
+      report_id,
+      people_id,
+      lostSituation_id,
     });
     res.status(200).send(newSearchRegistrations);
   } catch (error) {
@@ -66,10 +73,21 @@ const getAllSearchRegistrations = async (req, res) => {
             [Op.like]: `%${people_name}%`,
           },
         },
+        include: [
+          { model: Report },
+          { model: Peoples },
+          { model: Lost_situation },
+        ],
       });
       res.status(200).send(searchRegistrationList);
     } else {
-      const searchRegistrationList = await Search_registrations.findAll();
+      const searchRegistrationList = await Search_registrations.findAll({
+        include: [
+          { model: Report },
+          { model: Peoples },
+          { model: Lost_situation },
+        ],
+      });
       res.status(200).send(searchRegistrationList);
     }
   } catch (error) {
@@ -84,6 +102,11 @@ const getDetailSearchRegistrations = async (req, res) => {
       where: {
         id,
       },
+      include: [
+        { model: Report },
+        { model: Peoples },
+        { model: Lost_situation },
+      ],
     });
     res.status(200).send(detailSearchRegistrations);
   } catch (error) {
