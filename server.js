@@ -42,8 +42,8 @@ io.on("connection", (socket) => {
 });
 
 // lang nghe su kien ket noi
-app.listen(3000, async () => {
-  console.log("App listening on http://localhost:3000");
+app.listen(8080, async () => {
+  console.log("App listening on http://localhost:8080");
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
