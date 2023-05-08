@@ -7,6 +7,7 @@ const {
   deletePeople,
   imageSearches,
   detailImage,
+  advancedSearch,
 } = require("../controller/people.controller");
 const { uploadImages } = require("../middlewares/upload/upload-image");
 const { checkExist } = require("../middlewares/validations/checkExist");
@@ -22,7 +23,7 @@ peopleRouter.post(
   imageSearches
 );
 peopleRouter.get("/people-detailImage", detailImage);
-
+peopleRouter.get("/people-advancedSearch", advancedSearch);
 module.exports = {
   peopleRouter,
 };

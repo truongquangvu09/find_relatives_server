@@ -195,6 +195,46 @@ const detailImage = async (req, res) => {
   }
 };
 
+const advancedSearch = async (req, res) => {
+  const {
+    people_name,
+    birthday,
+    address,
+    dad_name,
+    mom_name,
+    coalpeople_name,
+  } = req.query;
+  try {
+    if (
+      people_name ||
+      birthday ||
+      address ||
+      dad_name ||
+      mom_name ||
+      coalpeople_name
+    ) {
+      const peopleSearch = await Peoples.findAll({
+        where: {
+          [Op.or]: [
+            { people_name: { [Op.like]: `%${people_name}%` } },
+            { birthday: { [Op.like]: `%${birthday}%` } },
+            { address: { [Op.like]: `%${address}%` } },
+            { dad_name: { [Op.like]: `%${dad_name}%` } },
+            { mom_name: { [Op.like]: `%${mom_name}%` } },
+            { coalpeople_name: { [Op.like]: `%${coalpeople_name}%` } },
+          ],
+        },
+        include: [{ model: Lost_situation }],
+      });
+      res.status(200).send(peopleSearch);
+    } else {
+      res.status(404).send("không tìm thấy thông tin người cần tìm");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   createpeople,
   PeopleList,
@@ -202,4 +242,5 @@ module.exports = {
   deletePeople,
   imageSearches,
   detailImage,
+  advancedSearch,
 };
