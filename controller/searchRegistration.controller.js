@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Search_registrations } = require("../models/index");
+const { Search_registrations, sequelize } = require("../models/index");
 const { Report, Peoples, Lost_situation } = require("../models/index");
 
 const createSearchRegistrations = async (req, res) => {
@@ -124,21 +124,23 @@ const updateSearchRegistration = async (req, res) => {
     email,
     phone,
     cccd,
-    date_report,
     people_name,
     people_birthday,
     people_gender,
-    peolpe_address,
+    people_address,
     dad_name,
     mom_name,
     coal_people_name,
     brief_biography,
-    picture,
+    people_image,
     searching_process,
     date_missing,
     last_seen,
     lost_reason,
     status,
+    report_id,
+    people_id,
+    lostSituation_id,
   } = req.body;
   try {
     const updatedSearchRegistration = await Search_registrations.update(
@@ -150,23 +152,25 @@ const updateSearchRegistration = async (req, res) => {
         email,
         phone,
         cccd,
-        date_report,
         people_name,
         people_birthday,
         people_gender,
-        peolpe_address,
+        people_address,
         dad_name,
         mom_name,
         coal_people_name,
         brief_biography,
-        picture,
+        people_image,
         searching_process,
         date_missing,
         last_seen,
         lost_reason,
         status,
+        report_id,
+        people_id,
+        lostSituation_id,
       },
-      { where: { id: id } }
+      { where: { id } }
     );
     res.status(200).send("updated_search_registration");
   } catch (error) {
@@ -188,10 +192,23 @@ const deleteSearchRegistrations = async (req, res) => {
   }
 };
 
+const getPosts = async (req, res) => {
+  try {
+    const [results] = await sequelize.query(
+      `SELECT * FROM findrelatives_db.search_registrations
+      where status="đã xác nhận"`
+    );
+    res.status(200).send(results);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   createSearchRegistrations,
   getAllSearchRegistrations,
   getDetailSearchRegistrations,
   updateSearchRegistration,
   deleteSearchRegistrations,
+  getPosts,
 };

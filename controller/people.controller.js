@@ -1,6 +1,13 @@
 const { Op } = require("sequelize");
 const { Peoples } = require("../models/index");
 const { Lost_situation } = require("../models/index");
+const express = require("express");
+const fileUpload = require("express-fileupload");
+const sharp = require("sharp");
+const getPixels = require("get-pixels");
+const path = require("path");
+const fs = require("fs");
+const app = express();
 
 const createpeople = async (req, res) => {
   const {
@@ -16,7 +23,7 @@ const createpeople = async (req, res) => {
     lostSituation_id,
   } = req.body;
   const { file } = req;
-  const urlImage = `http://localhost:3000/${file.path}`;
+  const urlImage = `http://localhost:8080/${file.path}`;
   try {
     const newPeople = await Peoples.create({
       people_name,
@@ -90,9 +97,109 @@ const deletePeople = async (req, res) => {
   }
 };
 
+app.use(fileUpload());
+
+async function compareImages(image1Path, image2Path) {
+  const image1Buffer = await sharp(image1Path).toBuffer();
+  const image2Buffer = await sharp(image2Path).toBuffer();
+
+  return new Promise((resolve, reject) => {
+    getPixels(image1Path, (err, pixels1) => {
+      if (err) return reject(err);
+
+      getPixels(image2Path, (err, pixels2) => {
+        if (err) return reject(err);
+
+        const width = Math.min(pixels1.shape[0], pixels2.shape[0]);
+        const height = Math.min(pixels1.shape[1], pixels2.shape[1]);
+
+        let totalDiff = 0;
+        let numPixels = 0;
+
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const r1 = pixels1.get(x, y, 0);
+            const g1 = pixels1.get(x, y, 1);
+            const b1 = pixels1.get(x, y, 2);
+
+            const r2 = pixels2.get(x, y, 0);
+            const g2 = pixels2.get(x, y, 1);
+            const b2 = pixels2.get(x, y, 2);
+
+            const diff =
+              Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+            totalDiff += diff;
+
+            numPixels += 1;
+          }
+        }
+
+        resolve(totalDiff / numPixels);
+      });
+    });
+  });
+}
+
+const imageSearches = async (req, res) => {
+  const { file } = req;
+  const urlImage = `${file.path}`;
+
+  const uploadedImagePath = urlImage;
+
+  let bestScore = Infinity;
+  let bestImage = null;
+
+  for (const image of fs.readdirSync(
+    path.join(__dirname, "../public/images/people_image")
+  )) {
+    const imagePath = path.join(
+      __dirname,
+      "../public/images/people_image",
+      image
+    );
+
+    const score = await compareImages(uploadedImagePath, imagePath);
+
+    if (score < bestScore) {
+      bestScore = score;
+      bestImage = imagePath;
+    }
+  }
+
+  res.send(`
+      Uploaded image: <img src="http://localhost:8080/public/images/uploadedImagePath${uploadedImagePath.slice(
+        31
+      )}" /><br/>
+      Best match: <img src="http://localhost:8080${bestImage.slice(34)}" />
+    `);
+};
+
+const detailImage = async (req, res) => {
+  const { people_image } = req.query;
+  try {
+    if (people_image) {
+      const peopleSearch = await Peoples.findAll({
+        where: {
+          people_image: {
+            [Op.like]: `%${people_image}%`,
+          },
+        },
+        include: [{ model: Lost_situation }],
+      });
+      res.status(200).send(peopleSearch);
+    } else {
+      res.status(404).send("không có thông tin người cần tìm");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   createpeople,
   PeopleList,
   detailPeople,
   deletePeople,
+  imageSearches,
+  detailImage,
 };

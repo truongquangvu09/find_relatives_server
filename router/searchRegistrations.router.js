@@ -5,6 +5,7 @@ const {
   getDetailSearchRegistrations,
   deleteSearchRegistrations,
   updateSearchRegistration,
+  getPosts,
 } = require("../controller/searchRegistration.controller");
 
 const { Search_registrations } = require("../models/index");
@@ -38,6 +39,7 @@ SearchRegistrationsRouter.delete(
   deleteSearchRegistrations
 );
 
+SearchRegistrationsRouter.get("/searchRegistrations-getPost", getPosts);
 module.exports = {
   SearchRegistrationsRouter,
 };
