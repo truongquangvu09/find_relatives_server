@@ -1,6 +1,7 @@
 const express = require("express");
 const { sequelize } = require("./models");
 const { rootRouter } = require("./router/index");
+const cors = require("cors");
 const app = express();
 const path = require("path");
 const http = require("http");
@@ -13,6 +14,8 @@ app.use(express.json());
 // cai static files
 const publicPathDirectory = path.join(__dirname, "./public");
 app.use("/public", express.static(publicPathDirectory));
+
+app.use(cors());
 
 //dung router
 app.use("/api/v1", rootRouter);
