@@ -36,7 +36,10 @@ const login = async (req, res) => {
     });
     const isAuth = bcrypt.compareSync(password, user.password);
     if (isAuth) {
-      res.status(200).send({ message: "Logged in successfully", token });
+      const userType = user.type;
+      res
+        .status(200)
+        .send({ message: "Logged in successfully", token, userType });
     } else {
       res.status(403).send({ message: "Authentication failed" });
     }
