@@ -109,6 +109,12 @@ const deleteReport = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const logout = async (req, res) => {
+  const token = req.headers.authorization;
+  console.log("token: ", token);
+  res.send(token);
+};
 module.exports = {
   createAccount,
   login,
@@ -116,4 +122,5 @@ module.exports = {
   reportDetails,
   updateReport,
   deleteReport,
+  logout,
 };
