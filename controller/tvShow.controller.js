@@ -3,7 +3,7 @@ const { Tv_show } = require("../models/index");
 const createTvShow = async (req, res) => {
   const { content_text } = req.body;
   const { file } = req;
-  const urlImage = `http://localhost:3000/${file.path}`;
+  const urlImage = `http://localhost:8080/${file.path}`;
 
   try {
     const newTvShow = await Tv_show.create({ content_text, media: urlImage });

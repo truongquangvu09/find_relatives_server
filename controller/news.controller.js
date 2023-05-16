@@ -4,7 +4,7 @@ const { News } = require("../models/index");
 const createNews = async (req, res) => {
   const { content_text } = req.body;
   const { file } = req;
-  const urlImage = `http://localhost:3000/${file.path}`;
+  const urlImage = `http://localhost:8080/${file.path}`;
 
   try {
     const newNews = await News.create({ content_text, image: urlImage });

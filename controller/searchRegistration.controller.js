@@ -27,7 +27,7 @@ const createSearchRegistrations = async (req, res) => {
     report_id,
   } = req.body;
   const { file } = req;
-  const urlImage = `http://localhost:3000/${file.path}`;
+  const urlImage = `http://localhost:8080/${file.path}`;
   try {
     const newSearchRegistrations = await Search_registrations.create({
       report_name,
