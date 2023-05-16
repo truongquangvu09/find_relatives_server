@@ -25,8 +25,6 @@ const createSearchRegistrations = async (req, res) => {
     lost_reason,
     status,
     report_id,
-    people_id,
-    lostSituation_id,
   } = req.body;
   const { file } = req;
   const urlImage = `http://localhost:3000/${file.path}`;
@@ -54,8 +52,6 @@ const createSearchRegistrations = async (req, res) => {
       lost_reason,
       status,
       report_id,
-      people_id,
-      lostSituation_id,
     });
     res.status(200).send(newSearchRegistrations);
   } catch (error) {
@@ -73,20 +69,12 @@ const getAllSearchRegistrations = async (req, res) => {
             [Op.like]: `%${people_name}%`,
           },
         },
-        include: [
-          { model: Report },
-          { model: Peoples },
-          { model: Lost_situation },
-        ],
+        include: [{ model: Report }],
       });
       res.status(200).send(searchRegistrationList);
     } else {
       const searchRegistrationList = await Search_registrations.findAll({
-        include: [
-          { model: Report },
-          { model: Peoples },
-          { model: Lost_situation },
-        ],
+        include: [{ model: Report }],
       });
       res.status(200).send(searchRegistrationList);
     }
@@ -102,11 +90,7 @@ const getDetailSearchRegistrations = async (req, res) => {
       where: {
         id,
       },
-      include: [
-        { model: Report },
-        { model: Peoples },
-        { model: Lost_situation },
-      ],
+      include: [{ model: Report }],
     });
     res.status(200).send(detailSearchRegistrations);
   } catch (error) {
@@ -139,8 +123,6 @@ const updateSearchRegistration = async (req, res) => {
     lost_reason,
     status,
     report_id,
-    people_id,
-    lostSituation_id,
   } = req.body;
   try {
     const updatedSearchRegistration = await Search_registrations.update(
@@ -167,8 +149,6 @@ const updateSearchRegistration = async (req, res) => {
         lost_reason,
         status,
         report_id,
-        people_id,
-        lostSituation_id,
       },
       { where: { id } }
     );

@@ -20,7 +20,6 @@ const createpeople = async (req, res) => {
     coalpeople_name,
     brief_biography,
     searching_process,
-    lostSituation_id,
   } = req.body;
   const { file } = req;
   const urlImage = `http://localhost:8080/${file.path}`;
@@ -36,7 +35,6 @@ const createpeople = async (req, res) => {
       brief_biography,
       people_image: urlImage,
       searching_process,
-      lostSituation_id,
     });
     res.status(200).send(newPeople);
   } catch (error) {
@@ -54,13 +52,10 @@ const PeopleList = async (req, res) => {
             [Op.like]: `%${people_name}%`,
           },
         },
-        include: [{ model: Lost_situation }],
       });
       res.status(200).send(list);
     } else {
-      const lists = await Peoples.findAll({
-        include: [{ model: Lost_situation }],
-      });
+      const lists = await Peoples.findAll();
       res.status(200).send(lists);
     }
   } catch (error) {
@@ -75,7 +70,6 @@ const detailPeople = async (req, res) => {
       where: {
         id,
       },
-      include: [{ model: Lost_situation }],
     });
     res.status(200).send(detail);
   } catch (error) {
@@ -184,7 +178,6 @@ const detailImage = async (req, res) => {
             [Op.like]: `%${people_image}%`,
           },
         },
-        include: [{ model: Lost_situation }],
       });
       res.status(200).send(peopleSearch);
     } else {
@@ -224,7 +217,6 @@ const advancedSearch = async (req, res) => {
             { coalpeople_name: { [Op.like]: `%${coalpeople_name}%` } },
           ],
         },
-        include: [{ model: Lost_situation }],
       });
       res.status(200).send(peopleSearch);
     } else {

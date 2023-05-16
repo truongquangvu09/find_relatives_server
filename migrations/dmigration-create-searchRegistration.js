@@ -102,22 +102,6 @@ module.exports = {
         },
         allowNull: false,
       },
-      people_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "peoples",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      lostSituation_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "lost_situations",
-          key: "id",
-        },
-        allowNull: false,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
