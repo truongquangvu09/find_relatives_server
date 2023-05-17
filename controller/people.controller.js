@@ -22,6 +22,9 @@ const createpeople = async (req, res) => {
     searching_process,
   } = req.body;
   const { file } = req;
+  if (!file) {
+    return res.status(400).send("No image provided");
+  }
   const urlImage = `http://localhost:8080/${file.path}`;
   try {
     const newPeople = await Peoples.create({

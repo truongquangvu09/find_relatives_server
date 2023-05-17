@@ -4,6 +4,9 @@ const { News } = require("../models/index");
 const createNews = async (req, res) => {
   const { content_text } = req.body;
   const { file } = req;
+  if (!file) {
+    return res.status(400).send("No image provided");
+  }
   const urlImage = `http://localhost:8080/${file.path}`;
 
   try {
