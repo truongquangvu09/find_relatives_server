@@ -27,10 +27,10 @@ const createSearchRegistrations = async (req, res) => {
     report_id,
   } = req.body;
   const { file } = req;
+  console.log("file", file);
   if (!file) {
     return res.status(400).send("No image provided");
   }
-  console.log("file", file);
   const urlImage = `http://localhost:8080/${file.path}`;
   try {
     const newSearchRegistrations = await Search_registrations.create({
