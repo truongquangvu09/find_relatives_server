@@ -10,6 +10,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      post_title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       searchRegistrations_id: {
         type: Sequelize.INTEGER,
         references: {

@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init(
-    {},
+    {
+      post_title: DataTypes.STRING,
+    },
 
     {
       sequelize,
