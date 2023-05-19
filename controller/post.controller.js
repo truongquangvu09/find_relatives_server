@@ -1,9 +1,11 @@
 const { Post, Search_registrations } = require("../models/index");
 
 const createPost = async (req, res) => {
-  const { searchRegistrations_id, people_id, lostSituation_id } = req.body;
+  const { post_title, searchRegistrations_id, people_id, lostSituation_id } =
+    req.body;
   try {
     const newPost = await Post.create({
+      post_title,
       searchRegistrations_id,
       people_id,
       lostSituation_id,
