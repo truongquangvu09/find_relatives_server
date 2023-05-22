@@ -200,30 +200,36 @@ const advancedSearch = async (req, res) => {
     mom_name,
     coalpeople_name,
   } = req.query;
+
   try {
-    if (
-      people_name ||
-      birthday ||
-      address ||
-      dad_name ||
-      mom_name ||
-      coalpeople_name
-    ) {
-      const peopleSearch = await Peoples.findAll({
-        where: {
-          [Op.or]: [
-            { people_name: { [Op.like]: `%${people_name}%` } },
-            { birthday: { [Op.like]: `%${birthday}%` } },
-            { address: { [Op.like]: `%${address}%` } },
-            { dad_name: { [Op.like]: `%${dad_name}%` } },
-            { mom_name: { [Op.like]: `%${mom_name}%` } },
-            { coalpeople_name: { [Op.like]: `%${coalpeople_name}%` } },
-          ],
-        },
-      });
+    let whereClause = {};
+
+    // Kiểm tra các giá trị query được gửi lên
+    if (people_name) {
+      whereClause.people_name = { [Op.like]: `%${people_name}%` };
+    }
+    if (birthday) {
+      whereClause.birthday = { [Op.eq]: new Date(birthday) };
+    }
+    if (address) {
+      whereClause.address = { [Op.like]: `%${address}%` };
+    }
+    if (dad_name) {
+      whereClause.dad_name = { [Op.like]: `%${dad_name}%` };
+    }
+    if (mom_name) {
+      whereClause.mom_name = { [Op.like]: `%${mom_name}%` };
+    }
+    if (coalpeople_name) {
+      whereClause.coalpeople_name = { [Op.like]: `%${coalpeople_name}%` };
+    }
+
+    // Thực hiện truy vấn chỉ khi có ít nhất một tham số tìm kiếm được gửi lên
+    if (Object.keys(whereClause).length > 0) {
+      const peopleSearch = await Peoples.findAll({ where: whereClause });
       res.status(200).send(peopleSearch);
     } else {
-      res.status(404).send("không tìm thấy thông tin người cần tìm");
+      res.status(404).send("Không tìm thấy thông tin người cần tìm");
     }
   } catch (error) {
     res.status(500).send(error);
