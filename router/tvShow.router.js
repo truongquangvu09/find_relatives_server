@@ -11,7 +11,7 @@ const { uploadImages } = require("../middlewares/upload/upload-image");
 const { checkExist } = require("../middlewares/validations/checkExist");
 const tvShowRouter = express.Router();
 
-tvShowRouter.post("/tvshow-create", uploadImages("tv_shows"), createTvShow);
+tvShowRouter.post("/tvshow-create", uploadImages("media"), createTvShow);
 tvShowRouter.get("/tvshow-list", tvShowList);
 tvShowRouter.get("/tvshow-detail/:id", checkExist(Tv_show), tvShowDetail);
 tvShowRouter.put(

@@ -137,6 +137,17 @@ async function compareImages(image1Path, image2Path) {
   });
 }
 
+const getUserByImage = async (imagePath) => {
+  const user = await Peoples.findOne({
+    where: {
+      people_image: {
+        [Op.like]: `%${imagePath}%`,
+      },
+    },
+  });
+  return user;
+};
+
 const imageSearches = async (req, res) => {
   const { file } = req;
   const urlImage = `${file.path}`;
@@ -162,20 +173,24 @@ const imageSearches = async (req, res) => {
       bestImage = imagePath;
     }
   }
-
-  res.send(`
-      Uploaded image: <img src="http://localhost:8080/public/images/uploadedImagePath${uploadedImagePath.slice(
-        31
-      )}" /><br/>
-      Best match: <img src="http://localhost:8080${bestImage.slice(34)}" />
-    `);
+  const bestImagePath = `${bestImage.slice(66)}`;
+  console.log({ bestImagePath });
+  const user = await getUserByImage(bestImagePath);
+  console.log({ user });
+  res.status(200).send(user);
+  // res.send(`
+  //     Uploaded image: <img src="http://localhost:8080/public/images/uploadedImagePath${uploadedImagePath.slice(
+  //       31
+  //     )}" /><br/>
+  //     Best match: <img src="http://localhost:8080${bestImage.slice(34)}" />
+  //   `);
 };
 
 const detailImage = async (req, res) => {
   const { people_image } = req.query;
   try {
     if (people_image) {
-      const peopleSearch = await Peoples.findAll({
+      const peopleSearch = await Peoples.findOne({
         where: {
           people_image: {
             [Op.like]: `%${people_image}%`,
