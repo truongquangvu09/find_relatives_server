@@ -16,11 +16,11 @@ const { uploadImages } = require("../middlewares/upload/upload-image");
 
 const newsRouter = express.Router();
 
-newsRouter.post("/news-create", uploadImages("news"), createNews);
+newsRouter.post("/news-create", uploadImages("image"), createNews);
 newsRouter.get("/news-list", getNewsList);
 newsRouter.get("/news-detail/:id", checkExist(News), getNewsDetail);
 newsRouter.put("/news-update/:id", checkExist(News), updateNews);
-newsRouter.delete("/news-detail/:id", checkExist(News), deleteNews);
+newsRouter.delete("/news-delete/:id", checkExist(News), deleteNews);
 module.exports = {
   newsRouter,
 };
