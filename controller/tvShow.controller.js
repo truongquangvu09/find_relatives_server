@@ -41,7 +41,7 @@ const updateTvShow = async (req, res) => {
   const { id } = req.params;
   const { content_text } = req.body;
   const { file } = req;
-  const urlImage = `http://localhost:3000/${file.path}`;
+  const urlImage = `http://localhost:8080/${file.path}`;
   try {
     const tvShowUpdated = await Tv_show.update(
       {

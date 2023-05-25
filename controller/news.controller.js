@@ -54,15 +54,18 @@ const getNewsDetail = async (req, res) => {
 
 const updateNews = async (req, res) => {
   const { id } = req.params;
-  const { content_text, image } = req.body;
+  const { content_text } = req.body;
+  const { file } = req;
+  const urlImage = `http://localhost:8080/${file.path}`;
   try {
-    const newsUpdated = await News.update(
-      { content_text, image },
+    const tvShowUpdated = await News.update(
       {
-        where: { id: id },
-      }
+        content_text,
+        image: urlImage,
+      },
+      { where: { id } }
     );
-    res.status(200).send("updated content_text: " + content_text);
+    res.status(200).send("updated");
   } catch (error) {
     res.status(500).send(error);
   }
