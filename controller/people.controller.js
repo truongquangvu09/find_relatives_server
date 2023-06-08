@@ -96,7 +96,7 @@ const deletePeople = async (req, res) => {
 
 app.use(fileUpload());
 
-async function compareImages(image1Path, image2Path) {
+async function compareImages1(image1Path, image2Path) {
   const image1Buffer = await sharp(image1Path).toBuffer();
   const image2Buffer = await sharp(image2Path).toBuffer();
 
@@ -134,6 +134,57 @@ async function compareImages(image1Path, image2Path) {
         resolve(totalDiff / numPixels);
       });
     });
+  });
+}
+
+async function compareImages(image1Path, image2Path) {
+  const image1Resized = sharp(image1Path).resize(8, 8);
+  const image2Resized = sharp(image2Path).resize(8, 8);
+
+  const image1ResizedBuffer = await image1Resized
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  const image2ResizedBuffer = await image2Resized
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  return new Promise((resolve, reject) => {
+    const pixels1 = image1ResizedBuffer.data;
+    const pixels2 = image2ResizedBuffer.data;
+
+    const width = Math.min(
+      image1ResizedBuffer.info.width,
+      image2ResizedBuffer.info.width
+    );
+    const height = Math.min(
+      image1ResizedBuffer.info.height,
+      image2ResizedBuffer.info.height
+    );
+
+    let totalDiff = 0;
+    let numPixels = 0;
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const index1 = (y * image1ResizedBuffer.info.width + x) * 3;
+        const index2 = (y * image2ResizedBuffer.info.width + x) * 3;
+
+        const r1 = pixels1[index1];
+        const g1 = pixels1[index1 + 1];
+        const b1 = pixels1[index1 + 2];
+
+        const r2 = pixels2[index2];
+        const g2 = pixels2[index2 + 1];
+        const b2 = pixels2[index2 + 2];
+
+        const diff = Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+        totalDiff += diff;
+
+        numPixels += 1;
+      }
+    }
+
+    resolve(totalDiff / numPixels);
   });
 }
 
@@ -178,12 +229,6 @@ const imageSearches = async (req, res) => {
   const user = await getUserByImage(bestImagePath);
   console.log({ user });
   res.status(200).send(user);
-  // res.send(`
-  //     Uploaded image: <img src="http://localhost:8080/public/images/uploadedImagePath${uploadedImagePath.slice(
-  //       31
-  //     )}" /><br/>
-  //     Best match: <img src="http://localhost:8080${bestImage.slice(34)}" />
-  //   `);
 };
 
 const detailImage = async (req, res) => {
