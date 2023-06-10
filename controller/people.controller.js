@@ -138,9 +138,17 @@ async function compareImages1(image1Path, image2Path) {
 }
 
 async function compareImages(image1Path, image2Path) {
-  const image1Resized = sharp(image1Path).resize(8, 8);
-  const image2Resized = sharp(image2Path).resize(8, 8);
+  const image1Resized = sharp(image1Path)
+    .resize(8, 8)
+    .toColorspace("gray16")
+    .normalize()
+    .toColorspace("srgb");
 
+  const image2Resized = sharp(image2Path)
+    .resize(8, 8)
+    .toColorspace("gray16")
+    .normalize()
+    .toColorspace("srgb");
   const image1ResizedBuffer = await image1Resized
     .raw()
     .toBuffer({ resolveWithObject: true });
